@@ -107,7 +107,8 @@ Local setup for Windows OS
 uv venv --python 3.13
 ```
 
-### Next step
+### Activate venv
+```
+.venv\Scripts\activate
 ```
 todo
-```
