@@ -5,8 +5,9 @@ Url shortener app with FatAPI inspired by Bitly
 ### Table of contents
 
 * [System Design](#system-design)
+* [Low Level Design Implementation](#low-level-design-implementation)
+* [Structure](#structure)
 * [Setup](#setup)
-
 
 # System Design
 
@@ -99,16 +100,55 @@ fail
 
 todo
 
+# Low Level Design Implementation
+
+[url_shortener.py](low_level_design/url_shortener.py)
+
+# Structure
+command: python -m directory_tree -I temp media __init__.py
+
+```shell
+mitly/
+├── low_level_design/
+│   └── url_shortener.py
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+└── src/
+    └── app/
+        ├── api/
+        │   ├── v1/
+        │   │   ├── api.py
+        │   │   └── routes/
+        │   │       └── public.py
+        │   └── v2/
+        ├── config/
+        │   ├── base.py
+        │   ├── dev.py
+        │   ├── prod.py
+        │   └── test.py
+        ├── crud/
+        ├── db/
+        │   ├── database.py
+        │   └── models.py
+        ├── schemas/
+        └── main.py
+```
+
 # Setup
+
 Local setup for Windows OS
 
 ### Configure and activate python virtual environment
+
 ```shell
 uv venv --python 3.13
 ```
 
 ### Activate venv
+
 ```
 .venv\Scripts\activate
 ```
+
 todo
