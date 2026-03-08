@@ -7,6 +7,7 @@ Url shortener app with FatAPI inspired by Bitly
 * [System Design](#system-design)
 * [Low Level Design Implementation](#low-level-design-implementation)
 * [Structure](#structure)
+* [Development Workflow](#development-workflow)
 * [Setup](#setup)
 
 # System Design
@@ -31,21 +32,21 @@ Core features
 Qualities like Scalability, Latency, Security, Fault Tolerance
 
 1. Ensure **uniqueness**   
-   We must guarantee that each short URL maps to exactly one long URL, otherwise users could be redirected to an
+   We must guarantee that each short URL maps to exactly one long URL; otherwise users could be redirected to an
    unexpected website.
 
-2. Low **latency** on redirects (~200ms)
+2. Low **latency** on redirects (~200 ms)
 
 3. **Scale** to support:
     - 100M daily active users (DAU)
     - 1B stored URLs
 
-4. **CAP Theorem** (Brewer's theorem says that **distributed systems** can guarantee only 2 guaranties at the same
+4. **CAP Theorem** (Brewer's theorem says that **distributed systems** can guarantee only two guaranties at the same
    time)  
    **AP + eventual consistency** (Tech: Cassandra, DynamoDB)  
    eventual consistency means that updates propagate to all replicas over time  
    Because we would prefer the system to be always working, despite a node failure. Having the most recent data as soon
-   as possible is not priority.
+   as possible is not a priority.
     - ✅ Guarantee **[A]vailability**: (информацията винаги е налична, но не винаги е актуална) Every request receives
       a (non-error) response, even if a node has dropped, without the guarantee that it contains the most recent
       write/data.
@@ -57,7 +58,7 @@ Qualities like Scalability, Latency, Security, Fault Tolerance
       Strong consistency guarantees that the following example will **NOT** happen:  
       p1 from EU buys last ticket to a concert and p2 buys it at the same time from US.
 
-💡Note : [P]artition Tolerance is usually not optional in modern distributed systems because networks will eventually
+💡Note: [P]artition Tolerance is usually not optional in modern distributed systems because networks will eventually
 fail
 
 ## -------------------- 2. Core Entities
@@ -134,6 +135,10 @@ mitly/
         ├── schemas/
         └── main.py
 ```
+# Development Workflow
+
+Inside out approach (Data > Logic > Interface)  
+database models > pydantic schemas > crud logic > fastapi endpoints > main.py entry point
 
 # Setup
 
