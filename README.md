@@ -21,8 +21,8 @@ Url shortener app with FatAPI inspired by Bitly
 Core features
 
 1. create a short url from a long url
-    - [optional] support a custom alias
     - [optional] support expiration time
+    - [skipped] support a custom alias
 2. redirection to the original url from the short one
 
 ### Non-functional Requirements
