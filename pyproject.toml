@@ -20,5 +20,6 @@ major_version_zero = true
 [dependency-groups]
 dev = [
     "commitizen>=4.13.9",
+    "directory-tree>=1.0.0",
     "pytest>=9.0.2",
 ]

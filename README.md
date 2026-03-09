@@ -106,7 +106,7 @@ todo
 [url_shortener.py](low_level_design/url_shortener.py)
 
 # Structure
-command: ```python -m directory_tree -I temp media __init__.py```
+command: ```uv run python -m directory_tree -I temp media __init__.py __pycache__```
 
 ```shell
 mitly/
@@ -114,26 +114,33 @@ mitly/
 │   └── url_shortener.py
 ├── pyproject.toml
 ├── README.md
-├── requirements.txt
-└── src/
-    └── app/
-        ├── api/
-        │   ├── v1/
-        │   │   ├── api.py
-        │   │   └── routes/
-        │   │       └── public.py
-        │   └── v2/
-        ├── config/
-        │   ├── base.py
-        │   ├── dev.py
-        │   ├── prod.py
-        │   └── test.py
-        ├── crud/
-        ├── db/
-        │   ├── database.py
-        │   └── models.py
-        ├── schemas/
-        └── main.py
+├── requirements/
+│   ├── base.txt
+│   └── local.txt
+├── src/
+│   └── app/
+│       ├── api/
+│       │   ├── v1/
+│       │   │   ├── api.py
+│       │   │   └── routes/
+│       │   │       └── public.py
+│       │   └── v2/
+│       ├── config/
+│       │   ├── base.py
+│       │   ├── dev.py
+│       │   ├── prod.py
+│       │   └── test.py
+│       ├── crud/
+│       ├── db/
+│       │   ├── database.py
+│       │   └── models.py
+│       ├── main.py
+│       └── schemas/
+├── tests/
+│   ├── conftest.py
+│   └── db/
+│       └── test_database.py
+└── uv.lock
 ```
 # Development Workflow
 

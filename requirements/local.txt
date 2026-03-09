@@ -1,2 +1,3 @@
 commitizen==4.13.9 # Terminal tool that helps writing conventional commits
 pytest==9.0.2 # Testing Framework
+directory-tree==1.0.0 # To represent the folder structure in terminal
