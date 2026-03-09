@@ -34,13 +34,14 @@ def create_db_if_missing():
     if not database_exists(engine.url):
         create_database(engine.url)
 
+
 def create_tables_if_missing():
     """
     By importing Base from models, the python interpreter initializes the classes inside (which inherit from Base)
     and this registers models/tables characteristics in Base.metadata.
     If we used local Base, it would be empty
     """
-    from models import Base # local import to avoid circular imports
+    from models import Base  # local import to avoid circular imports
     # print(f"Registered tables: {Base.metadata.tables.keys()}")  # to check what tables are registered
     engine, _ = get_engine_and_session()
     Base.metadata.create_all(bind=engine)
