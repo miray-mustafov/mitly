@@ -9,6 +9,7 @@ Url shortener app with FatAPI inspired by Bitly
 * [Structure](#structure)
 * [Development Workflow](#development-workflow)
 * [Setup](#setup)
+* [Helpfull stuff](#helpfull-stuff)
 
 # System Design
 
@@ -164,3 +165,10 @@ uv venv --python 3.13
 ```
 
 todo
+
+# Helpfull stuff
+
+run tests locally at root level:
+```shell
+uv run pytest
+```
