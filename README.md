@@ -107,8 +107,8 @@ todo
 [url_shortener.py](low_level_design/url_shortener.py)
 
 # Structure
-command: ```uv run python -m directory_tree -I temp media __init__.py __pycache__```
-
+command: ```uv run python -m directory_tree -I temp media __init__.py __pycache__```  
+todo: update structure
 ```shell
 mitly/
 ├── low_level_design/
