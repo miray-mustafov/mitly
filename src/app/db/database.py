@@ -4,22 +4,15 @@ from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import Session
 from typing import Generator, Annotated
 from fastapi import Depends
-import os
+from ..config import settings as s # relative import to reach the config package from the database module
 
 # When your python classes in models.py inherit from Base, they are translated to the database language
 Base = declarative_base()
 
 
 def get_engine_and_session() -> tuple:
-    DB_DIALECT = os.getenv("DB_DIALECT")
-    DB_DRIVER = os.getenv("DB_DRIVER")
-    DB_USER = os.getenv("DB_USER")
-    DB_PASS = os.getenv("DB_PASS")
-    DB_HOST = os.getenv("DB_HOST")
-    DB_NAME = os.getenv("DB_NAME")
-
     # defining a destination where sqlalchemy should go and how to log in, which driver to use, etc.
-    SQLALCHEMY_DATABASE_URL = f"{DB_DIALECT}+{DB_DRIVER}://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
+    SQLALCHEMY_DATABASE_URL = f"{s.DB_DIALECT}+{s.DB_DRIVER}://{s.DB_USER}:{s.DB_PASS}@{s.DB_HOST}/{s.DB_NAME}"
 
     # the engine is like a power strip (разклонител) plugged into a wall outlet (контакт) (PostgresSQL)
     engine = create_engine(SQLALCHEMY_DATABASE_URL)

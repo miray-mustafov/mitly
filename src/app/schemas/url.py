@@ -1,4 +1,4 @@
-from pydantic import BaseModel, HttpUrl, Field
+from pydantic import BaseModel, HttpUrl, Field, ConfigDict
 from datetime import datetime
 from typing import Optional
 
@@ -16,16 +16,24 @@ class URLBase(BaseModel):
 
 class URLCreate(URLBase):  # Defining the input
     # Allows user to specify custom expiration, default to None (CRUD handles default)
-    expiration_days: Optional[int] = Field(None, ge=1, le=365)
+    expiry_days: Optional[int] = Field(None, ge=1, le=365)
 
 
 class URLRead(BaseModel):  # Defining the output
+    """
+    why model_config = ConfigDict(from_attributes=True)
+    usually pydantic models expect dictionary, but with from_attributes=True,
+    we tell pydantic to use the objs attributes directly,
+    and then we can use URLRead.model_validate(url_obj)
+    instead of URLRead(
+                    param_1: url_obj.param_1,
+                    param_2: url_obj.param_2,
+                    ...)
+    """
+    model_config = ConfigDict(from_attributes=True)
+
     short_url_id: str
     original_url: str
     created_at: datetime
     expires_at: datetime
     is_expired: bool
-
-    class Config:
-        # This tells Pydantic to read data even if it's an SQLAlchemy model object instead of a dictionary.
-        from_attributes = True

@@ -1,1 +1,5 @@
-from .base import *  # noqa
+from .base import AppBaseSettings
+
+
+class Settings(AppBaseSettings):
+    DEFAULT_URL_EXPIRY_DAYS = 35
