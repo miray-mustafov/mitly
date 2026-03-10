@@ -1,17 +1,17 @@
 from src.app.db import database as actual_database
+from src.app.config.test import Settings
 import pytest
 
 
-def test_get_engine_and_session(monkeypatch):  # monkeypatch is a built-in pytest fixture
+def test_get_engine_and_session(monkeypatch):
     """
     The common AAA tests structure pattern.
     We are not testing if SQLAlchemy can parse a URL.
     We are testing if the code correctly retrieves variables from the environment
-    and plugs them into the right slots in the connection string.
+    and plugs them into the right slots in the url connection string.
     """
 
-    # arrange(setup): Fake the environment variables
-    # this ensures os.getenv returns these values during the test
+    # arrange
     monkeypatch.setenv("DB_DIALECT", "postgresql")
     monkeypatch.setenv("DB_DRIVER", "psycopg")
     monkeypatch.setenv("DB_USER", "test_user")
@@ -19,14 +19,24 @@ def test_get_engine_and_session(monkeypatch):  # monkeypatch is a built-in pytes
     monkeypatch.setenv("DB_HOST", "localhost")
     monkeypatch.setenv("DB_NAME", "test_db")
 
-    # act: Call the actual function
-    engine, SessionLocal = actual_database.get_engine_and_session()
+    # Since 'settings' is already initialized and cached in actual_database, 
+    # we test by creating a new Settings object which should pick up the monkeypatched env vars.
+    test_settings = Settings()
+    
+    # Verify Settings picks up monkeypatch
+    assert test_settings.DB_USER == "test_user"
+    assert test_settings.DB_NAME == "test_db"
 
-    # assert: Verify the engine URL is constructed correctly
+    # To test actual_database.get_engine_and_session, we would need to override the cached settings.
+    # Instead, we verify the logic of engine creation by mocking the settings used inside it.
+    import src.app.db.database as database_mock
+    monkeypatch.setattr(database_mock, "s", test_settings)
+
+    engine, SessionLocal = database_mock.get_engine_and_session()
+
+    # assert
     expected_url = "postgresql+psycopg://test_user:test_pass@localhost/test_db"
     assert engine.url.render_as_string(hide_password=False) == expected_url
-    assert SessionLocal is not None  # not-so-relevant check but just in case
-    assert engine is not None
 
 
 def test_get_db_lifecycle(mocker):  # all AI here

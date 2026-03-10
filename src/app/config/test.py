@@ -2,4 +2,4 @@ from .base import AppBaseSettings
 
 
 class Settings(AppBaseSettings):
-    DEFAULT_URL_EXPIRY_DAYS = 1
+    DEFAULT_URL_EXPIRY_DAYS: int = 1

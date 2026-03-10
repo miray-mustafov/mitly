@@ -1,6 +1,8 @@
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from src.app.db.models import Url  # ! just to register the model in Base.metadata
+from src.app.db.models import Base  # ! Import from models so Base knows about the models
 
 SQLALCHEMY_TEST_DATABASE_URL = "sqlite:///:memory:"
 
@@ -21,7 +23,6 @@ def db_session():
     )
     TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-    from src.app.db.models import Base  # ! Import from models so Base knows about the models
     Base.metadata.create_all(bind=engine)  # Create the tables in the SQLite memory
 
     session = TestingSessionLocal()
