@@ -1,6 +1,6 @@
-from src.app.crud.crud_url import create_url_obj, get_url_obj
-from src.app.schemas.url import URLCreate
-from src.app.db.models import Url
+from app.crud.crud_url import create_url_obj, get_url_obj
+from app.schemas.url import URLCreate
+from app.db.models import Url
 from pydantic import HttpUrl
 
 

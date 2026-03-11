@@ -1,14 +1,33 @@
 [project]
 name = "mitly"
 version = "0.1.0"
-requires-python = "==3.13.7"
+requires-python = ">=3.13, <3.14"
 dependencies = [
     "fastapi>=0.135.1",
+    "greenlet>=3.3.2",
+    "psycopg[binary]>=3.3.3",
     "pydantic-settings>=2.13.1",
-    "pytest>=9.0.2",
-    "pytest-mock>=3.15.1",
+    "sqlalchemy>=2.0.48",
+    "sqlalchemy-utils>=0.42.1",
+    "tzdata>=2025.3",
     "uvicorn>=0.41.0",
 ]
+
+# so that uv/python knows how to build and install this project into .venv as a python package
+# then imports/scripts can work through the installed package instead of only through raw file paths
+# we can do directly `import app` even outside the src/app/ package
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts] # so that we can run the project with `uv run mitly` instead of `uv run python -m src.app.main`
+mitly = "app.main:main" # [app.]=python package; [main.]=the module main.py; [:main]=def main()
+
+[tool.setuptools] # because our python package(src/app) is inside the `src` folder, not at the project root
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find] # because setuptools must search for packages inside `src` so it can find `app`
+where = ["src"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
@@ -22,5 +41,7 @@ major_version_zero = true
 dev = [
     "commitizen>=4.13.9",
     "directory-tree>=1.0.0",
+    "httpx>=0.28.1",
     "pytest>=9.0.2",
+    "pytest-mock>=3.15.1",
 ]

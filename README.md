@@ -1,12 +1,12 @@
 # Mitly
 
-Url shortener app with FatAPI inspired by Bitly
+Url shortener app inspired by Bitly
 
 ### Table of contents
 
 * [System Design](#system-design)
 * [Low Level Design Implementation](#low-level-design-implementation)
-* [Structure](#structure)
+* [Folder Structure](#folder-structure)
 * [Development Workflow](#development-workflow)
 * [Setup](#setup)
 * [Helpfull stuff](#helpfull-stuff)
@@ -104,45 +104,28 @@ todo
 
 # Low Level Design Implementation
 
-[url_shortener.py](low_level_design/url_shortener.py)
+[low_level_design/url_shortener.py](low_level_design/url_shortener.py)
 
-# Structure
-command: ```uv run python -m directory_tree -I temp media __init__.py __pycache__```  
-todo: update structure
+# Folder Structure
+
+helper command: ```uv run python -m directory_tree -I temp media __init__.py __pycache__ *.* routes low_level_design```
+
 ```shell
 mitly/
-├── low_level_design/
-│   └── url_shortener.py
-├── pyproject.toml
-├── README.md
-├── requirements/
-│   ├── base.txt
-│   └── local.txt
-├── src/
-│   └── app/
-│       ├── api/
-│       │   ├── v1/
-│       │   │   ├── api.py
-│       │   │   └── routes/
-│       │   │       └── public.py
-│       │   └── v2/
-│       ├── config/
-│       │   ├── base.py
-│       │   ├── dev.py
-│       │   ├── prod.py
-│       │   └── test.py
-│       ├── crud/
-│       ├── db/
-│       │   ├── database.py
-│       │   └── models.py
-│       ├── main.py
-│       └── schemas/
-├── tests/
-│   ├── conftest.py
-│   └── db/
-│       └── test_database.py
-└── uv.lock
+├── requirements/       # base/local dependencies
+├── src/                # source code
+│   └── app/            # application code
+│       ├── api/        # api routers and endpoint definitions
+│       │   ├── v1/     # current public/stable api version
+│       │   └── v2/     # next/experimental api version
+│       ├── config/     # app settings split by environment type
+│       ├── crud/       # business logic and data access layer
+│       ├── db/         # database setup, sessions, and ORM models
+│       ├── schemas/    # pydantic schemas defining the valid api input/output format
+│       └── main.py     # application entry point
+└── tests/              # automated tests
 ```
+
 # Development Workflow
 
 Inside out approach (Data > Logic > Interface)  
@@ -164,11 +147,18 @@ uv venv --python 3.13
 .venv\Scripts\activate
 ```
 
+### Run the app
+
+```
+uv run mitly
+```
+
 todo
 
 # Helpfull stuff
 
 run tests locally at root level:
+
 ```shell
 uv run pytest
 ```
