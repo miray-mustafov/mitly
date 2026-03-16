@@ -53,6 +53,8 @@
 * **Advanced Testing:** Developing a custom "Live Migration" test suite to verify database schema migrations while the
   application remains active and handles real-time read/write traffic.
 
+[↑ Back to Top](#table-of-contents)
+
 # Folder Structure
 
 helper command: ```uv run python -m directory_tree -I temp media __init__.py __pycache__ *.* routes low_level_design```
@@ -73,10 +75,14 @@ mitly/
 └── tests/            # automated tests
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 # Development Workflow
 
 Inside out approach (Data > Logic > Interface)  
 database models > pydantic schemas > crud logic > fastapi endpoints > main.py entry point
+
+[↑ Back to Top](#table-of-contents)
 
 # System Design
 
@@ -169,9 +175,13 @@ fail
 
 todo
 
+[↑ Back to Top](#table-of-contents)
+
 # Low Level Design Implementation
 
 [low_level_design/url_shortener.py](low_level_design/url_shortener.py)
+
+[↑ Back to Top](#table-of-contents)
 
 # Setup
 
@@ -208,6 +218,8 @@ uv venv --python 3.13
 uv run mitly
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 # Helpful stuff
 
 run tests locally at root level:
@@ -215,3 +227,5 @@ run tests locally at root level:
 ```shell
 uv run pytest
 ```
+
+[↑ Back to Top](#table-of-contents)
