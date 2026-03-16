@@ -99,7 +99,6 @@ fail
 ![basic_high_level_design.png](media/basic_high_level_design.png)
 
 ## -------------------- 6. Deep Dives
-
 todo
 
 # Low Level Design Implementation
@@ -132,33 +131,37 @@ Inside out approach (Data > Logic > Interface)
 database models > pydantic schemas > crud logic > fastapi endpoints > main.py entry point
 
 # Setup
-
 Local setup for Windows OS
 
-### Configure and activate python virtual environment
+### Open terminal, navigate to a desired folder, and run:
+```shell
+git clone git@github.com:miray-mustafov/mitly.git
+```
 
+### Navigate to root level of the project:
+```shell
+cd mitly
+```
+
+### Configure and activate python virtual environment
 ```shell
 uv venv --python 3.13
-```
-
-### Activate venv
-
-```
 .venv\Scripts\activate
 ```
+*Note: If uv not installed ```powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"```
 
-### Run the app
+### Create local .env file next to .env.example:
 
-```
+### Setup postgres database(suggested command in .env.example):
+
+### Run the app:
+```shell
 uv run mitly
 ```
-
-todo
 
 # Helpfull stuff
 
 run tests locally at root level:
-
 ```shell
 uv run pytest
 ```
