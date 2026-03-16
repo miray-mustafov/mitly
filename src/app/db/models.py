@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from .database import Base  # relative import
+from sqlalchemy import String, Text, DateTime, func, BigInteger, Identity
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, Text, DateTime, func
 
 
 class Url(Base):
@@ -15,13 +15,20 @@ class Url(Base):
 
     __tablename__ = "urls"
 
+    # url_id: Mapped[int] = mapped_column( # that definition was omitted bcs of divergence with sqlite in testing
+    #     BigInteger,
+    #     Identity(start=11_123_123_123), # for testing purposes
+    #     primary_key=True,
+    # )
+
     url_id: Mapped[int] = mapped_column(primary_key=True)
-    short_url_id: Mapped[str] = mapped_column(String(8), unique=True, index=True)
     original_url: Mapped[str] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    # PostgresSQL allows multiple null values even if unique=True
+    short_url_id: Mapped[str] = mapped_column(String(8), nullable=True, unique=True, index=True)
 
     @property
     def is_expired(self) -> bool:

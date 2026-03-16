@@ -31,7 +31,7 @@ def test_get_url_obj_exists(db_session):
     db_session.add(new_url)
     db_session.commit()
 
-    res = get_url_obj(db_session, f"https://mit.ly/{test_short_id}")
+    res = get_url_obj(db_session, f"{test_short_id}")
 
     assert res is not None
     assert res.short_url_id == test_short_id

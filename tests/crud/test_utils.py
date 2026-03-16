@@ -1,9 +1,8 @@
 from src.app.crud.utils import ShortUrlIdGenerator
 
 
-def test_encode_base62():
-    # Test cases: (input, expected)
-    test_cases = (
+def test_generate_short_url_id_following_the_base62_encoding():
+    test_cases = (  # (input, expected)
         (0, "0"),
         (1, "1"),
         (10, "a"),
@@ -13,18 +12,4 @@ def test_encode_base62():
         (98_267_983_555, "1JgmryH")
     )
     for num, expected in test_cases:
-        assert ShortUrlIdGenerator._encode_base62(num) == expected
-
-
-def test_generate_short_url_id():
-    # Store initial ID
-    initial_id = ShortUrlIdGenerator.ID
-
-    # Generate an ID
-    id1 = ShortUrlIdGenerator.generate_short_url_id()
-    assert id1 == ShortUrlIdGenerator._encode_base62(initial_id)
-
-    # Generate another ID
-    id2 = ShortUrlIdGenerator.generate_short_url_id()
-    assert id2 == ShortUrlIdGenerator._encode_base62(initial_id + 1)
-    assert id1 != id2
+        assert ShortUrlIdGenerator.generate_short_url_id(num) == expected

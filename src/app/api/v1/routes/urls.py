@@ -3,7 +3,16 @@ from app.db.database import dbDep
 from app.schemas.url import URLCreate, URLRead
 from app.crud import crud_url
 
-router = APIRouter()
+router = APIRouter(prefix="/urls", tags=["URLs"])
+
+
+@router.get("")
+def get_all_urls(db: dbDep):
+    """
+    That is currently for testing purposes
+    """
+    urls = crud_url.get_all_urls(db)
+    return urls
 
 
 @router.post("/shorten", response_model=URLRead)

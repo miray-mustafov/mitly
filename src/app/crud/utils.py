@@ -1,9 +1,4 @@
-import threading
-
-
 class ShortUrlIdGenerator:
-    _ID_LOCK = threading.Lock()
-    ID = 98_267_983_555
     ENCODING_SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     @classmethod
@@ -20,9 +15,5 @@ class ShortUrlIdGenerator:
         return "".join(reversed(result))
 
     @classmethod
-    def generate_short_url_id(cls) -> str:
-        # In the real-world where users create urls concurrently, the same id may be read at the same time.
-        with cls._ID_LOCK:  # Thread Safety ✅
-            short_id = cls._encode_base62(cls.ID)
-            cls.ID += 1
-        return short_id
+    def generate_short_url_id(cls, cur_id: int) -> str:
+        return cls._encode_base62(cur_id)
