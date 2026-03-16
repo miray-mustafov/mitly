@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from .database import Base  # relative import
-from sqlalchemy import String, Text, DateTime, func, BigInteger, Identity
+from sqlalchemy import String, Text, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 
@@ -27,8 +27,12 @@ class Url(Base):
         DateTime(timezone=True), server_default=func.now()
     )
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
-    # PostgresSQL allows multiple null values even if unique=True
-    short_url_id: Mapped[str] = mapped_column(String(8), nullable=True, unique=True, index=True)
+    short_url_id: Mapped[str] = mapped_column(
+        String(8),  # 62^8 = ~218 trillions of links; unique combinations
+        nullable=True,  # bcs of the db-flush pattern where we need to create an object beforehand to get the int id
+        unique=True,  # PostgresSQL allows multiple null values even if unique=True
+        index=True  # bcs we will often be searching by that id
+    )
 
     @property
     def is_expired(self) -> bool:

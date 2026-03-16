@@ -1,15 +1,82 @@
 <img src="media/mitly_logos/mitly-type-orange.svg" alt="mitly_logo" width="300">
 
-Url shortener app inspired by [Bitly](https://app.bitly.com/)
-
 ### Table of contents
 
-* [System Design](#system-design)
-* [Low Level Design Implementation](#low-level-design-implementation)
+* [Project Overview](#project-overview)
 * [Folder Structure](#folder-structure)
 * [Development Workflow](#development-workflow)
+* [System Design](#system-design)
+* [Low Level Design Implementation](#low-level-design-implementation)
 * [Setup](#setup)
-* [Helpfull stuff](#helpfull-stuff)
+* [Helpful stuff](#helpful-stuff)
+
+# Project Overview
+
+* **Tech**: FastAPI, React, PostgreSQL, SQLAlchemy, Pydantic, Pytest, Docker
+* **Summary**: Mitly is a URL shortening service inspired by [Bitly](https://app.bitly.com/)
+
+### Key Technical Implementation:
+
+* **Architectural Design:** Implemented a **N-Tier (Layered) Architecture** separating concerns into:
+    * Presentation Layer: `app/api/` & `app/schemas/`
+    * Business Logic Layer: `app/crud/`
+    * Data Access Layer: `app/crud/` how the app uses the database
+    * Database/Persistence Layer: `app/db/` how the database exists
+
+
+* **Database Integration:** Implemented a PostgreSQL-backed persistence layer using SQLAlchemy ORM. Utilized a
+  `db.flush()` pattern to obtain auto-incremented primary keys for Base62 encoding, ensuring transactional
+  integrity and unique ID generation. [crud_url.py](src/app/crud/crud_url.py)
+
+
+* **Base62 Encoding Algorithm:** Developed a custom utility to convert internal database IDs into short, URL-friendly
+  alphanumeric strings (e.g. `mit.ly/1zG7`), optimized for $O(\log_{62} n)$ runtime. [utils.py](src/app/crud/utils.py)
+
+
+* **Robust Configuration Management:** Built a multi-environment settings system using `pydantic-settings` and
+  `@lru_cache`, supporting seamless transitions between Development, Production, and
+  Testing via `.env` files. [base.py](src/app/config/base.py) | [__init__.py](src/app/config/__init__.py)
+
+
+* **Unit testing:** Test suite using `pytest`. Configured an in-memory SQLite db and leveraged `pytest-mock`
+  for dependency injection and lifecycle testing. [conftest.py](tests/conftest.py)
+
+
+* **Modern Dependency Management:** Utilized `uv` for lightning-fast package management and
+  reproducible virtual environments. [pyproject.toml](pyproject.toml) | [uv.lock](uv.lock)
+
+### Upcoming Features & Scale-Up Plan:
+
+* **Deployment & Orchestration:** Dockerizing the application for containerized deployment and horizontal scaling.
+* **Frontend Integration:** Building a responsive user interface with **React** to allow users to manage their shortened
+  links.
+* **Advanced Testing:** Developing a custom "Live Migration" test suite to verify database schema migrations while the
+  application remains active and handles real-time read/write traffic.
+
+# Folder Structure
+
+helper command: ```uv run python -m directory_tree -I temp media __init__.py __pycache__ *.* routes low_level_design```
+
+```shell
+mitly/
+├── requirements/     # base/local dependencies
+├── src/              # source code
+│   └── app/          # application code
+│       ├── api/      # Presentation Layer: api routers and endpoint definitions
+│       │   ├── v1/   # current public/stable api version
+│       │   └── v2/   # next/experimental api version
+│       ├── config/   # app settings split by environment type
+│       ├── crud/     # Business Logic & Data Access Layer
+│       ├── db/       # Database Layer: database setup, sessions, and ORM models
+│       ├── schemas/  # Presentation Layer: pydantic schemas defining the valid api input/output format
+│       └── main.py   # application entry point
+└── tests/            # automated tests
+```
+
+# Development Workflow
+
+Inside out approach (Data > Logic > Interface)  
+database models > pydantic schemas > crud logic > fastapi endpoints > main.py entry point
 
 # System Design
 
@@ -99,55 +166,36 @@ fail
 ![basic_high_level_design.png](media/basic_high_level_design.png)
 
 ## -------------------- 6. Deep Dives
+
 todo
 
 # Low Level Design Implementation
 
 [low_level_design/url_shortener.py](low_level_design/url_shortener.py)
 
-# Folder Structure
-
-helper command: ```uv run python -m directory_tree -I temp media __init__.py __pycache__ *.* routes low_level_design```
-
-```shell
-mitly/
-├── requirements/       # base/local dependencies
-├── src/                # source code
-│   └── app/            # application code
-│       ├── api/        # api routers and endpoint definitions
-│       │   ├── v1/     # current public/stable api version
-│       │   └── v2/     # next/experimental api version
-│       ├── config/     # app settings split by environment type
-│       ├── crud/       # business logic and data access layer
-│       ├── db/         # database setup, sessions, and ORM models
-│       ├── schemas/    # pydantic schemas defining the valid api input/output format
-│       └── main.py     # application entry point
-└── tests/              # automated tests
-```
-
-# Development Workflow
-
-Inside out approach (Data > Logic > Interface)  
-database models > pydantic schemas > crud logic > fastapi endpoints > main.py entry point
-
 # Setup
+
 Local setup for Windows OS
 
 ### Open terminal, navigate to a desired folder, and run:
+
 ```shell
 git clone git@github.com:miray-mustafov/mitly.git
 ```
 
 ### Navigate to root level of the project:
+
 ```shell
 cd mitly
 ```
 
 ### Configure and activate python virtual environment
+
 ```shell
 uv venv --python 3.13
 .venv\Scripts\activate
 ```
+
 *Note: If uv not installed ```powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"```
 
 ### Create local .env file next to .env.example:
@@ -155,13 +203,15 @@ uv venv --python 3.13
 ### Setup postgres database(suggested command in .env.example):
 
 ### Run the app:
+
 ```shell
 uv run mitly
 ```
 
-# Helpfull stuff
+# Helpful stuff
 
 run tests locally at root level:
+
 ```shell
 uv run pytest
 ```

@@ -22,12 +22,12 @@ def shorten_url(url_input: URLCreate, db: dbDep):
 
 @router.get("/{short_url_id}")
 def get_url_obj_by_short_url_id(short_url_id: str, db: dbDep):
-    url_read = crud_url.get_url_obj(db, short_url_id)
+    url_obj = crud_url.get_url_obj(db, short_url_id)
 
-    if not url_read:
+    if not url_obj:
         raise HTTPException(status_code=404, detail="URL not found")
 
-    if url_read.is_expired:
+    if url_obj.is_expired:
         raise HTTPException(status_code=410, detail="URL has expired")
 
-    return url_read
+    return URLRead.model_validate(url_obj)
