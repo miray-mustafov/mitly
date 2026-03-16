@@ -1,6 +1,6 @@
-# Mitly
+<img src="media/mitly_logos/mitly-type-orange.svg" alt="mitly_logo" width="300">
 
-Url shortener app inspired by Bitly
+Url shortener app inspired by [Bitly](https://app.bitly.com/)
 
 ### Table of contents
 
