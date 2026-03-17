@@ -17,7 +17,7 @@
 
 ### Key Technical Implementation:
 
-* **Architectural Design:** Implemented a **N-Tier (Layered) Architecture** separating concerns into:
+* **Architectural Design:** Implemented an **N-Tier (Layered) Architecture** separating concerns into:
     * Presentation Layer: `app/api/` & `app/schemas/`
     * Business Logic Layer: `app/crud/`
     * Data Access Layer: `app/crud/` how the app uses the database
@@ -33,7 +33,7 @@
   alphanumeric strings (e.g. `mit.ly/1zG7`), optimized for $O(\log_{62} n)$ runtime. [utils.py](src/app/crud/utils.py)
 
 
-* **Robust Configuration Management:** Built a multi-environment settings system using `pydantic-settings` and
+* **Robust Configuration Management:** Built a multienvironment settings system using `pydantic-settings` and
   `@lru_cache`, supporting seamless transitions between Development, Production, and
   Testing via `.env` files. [base.py](src/app/config/base.py) | [__init__.py](src/app/config/__init__.py)
 
@@ -187,13 +187,13 @@ todo
 
 Local setup for Windows OS
 
-### Open terminal, navigate to a desired folder, and run:
+### Open the terminal, navigate to a desired folder, and run:
 
 ```shell
 git clone git@github.com:miray-mustafov/mitly.git
 ```
 
-### Navigate to root level of the project:
+### Navigate to the root level of the project:
 
 ```shell
 cd mitly
@@ -208,9 +208,9 @@ uv venv --python 3.13
 
 *Note: If uv not installed ```powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"```
 
-### Create local .env file next to .env.example:
+### Create a local .env file next to .env.example:
 
-### Setup postgres database(suggested command in .env.example):
+### Setup postgres database (suggested command in .env.example):
 
 ### Run the app:
 
