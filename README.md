@@ -1,81 +1,62 @@
-<img src="media/mitly_logos/mitly-type-orange.svg" alt="mitly_logo" width="300">
+<img src="backend/media/mitly_logos/mitly-type-orange.svg" alt="mitly_logo" width="300">
+
+# Mitly - Modern URL Shortener
+
+Mitly is a full-stack URL shortening service inspired by Bitly. This project consists of a FastAPI backend and a React frontend.
+
+## Project Structure
+
+```text
+mitly/
+├── backend/            # FastAPI Application
+│   └── README.md       # Backend technical documentation
+├── frontend/           # React + TypeScript Application
+│   └── README.md       # Frontend setup & architecture docs
+└── README.md           # Main project overview (this file)
+```
 
 ### Table of contents
 
 * [Project Overview](#project-overview)
-* [Folder Structure](#folder-structure)
-* [Development Workflow](#development-workflow)
+* [Quick Start](#quick-start)
 * [System Design](#system-design)
-* [Low Level Design Implementation](#low-level-design-implementation)
-* [Setup](#setup)
+* [Development Workflow](#development-workflow)
 * [Helpful stuff](#helpful-stuff)
 
 # Project Overview
 
-* **Tech**: FastAPI, React, PostgreSQL, SQLAlchemy, Pydantic, Pytest, Docker
-* **Summary**: Mitly is a URL shortening service inspired by [Bitly](https://app.bitly.com/)
+* **Tech Stack**: 
+    * **Backend**: FastAPI, PostgreSQL, SQLAlchemy, Pydantic, Pytest
+    * **Frontend**: React (Vite), TypeScript, TailwindCSS, Axios
+    * **Tools**: `uv` (Python), `npm` (Node.js)
 
-### Key Technical Implementation:
+* **Summary**: Mitly allows users to transform long, clunky URLs into short, shareable links with optional expiration dates.
 
-* **Architectural Design:** Implemented a **N-Tier (Layered) Architecture** separating concerns into:
-    * Presentation Layer: `app/api/` & `app/schemas/`
-    * Business Logic Layer: `app/crud/`
-    * Data Access Layer: `app/crud/` how the app uses the database
-    * Database/Persistence Layer: `app/db/` how the database exists
+---
 
+# Quick Start
 
-* **Database Integration:** Implemented a PostgreSQL-backed persistence layer using SQLAlchemy ORM. Utilized a
-  `db.flush()` pattern to obtain auto-incremented primary keys for Base62 encoding, ensuring transactional
-  integrity and unique ID generation. [crud_url.py](src/app/crud/crud_url.py)
-
-
-* **Base62 Encoding Algorithm:** Developed a custom utility to convert internal database IDs into short, URL-friendly
-  alphanumeric strings (e.g. `mit.ly/1zG7`), optimized for $O(\log_{62} n)$ runtime. [utils.py](src/app/crud/utils.py)
-
-
-* **Robust Configuration Management:** Built a multi-environment settings system using `pydantic-settings` and
-  `@lru_cache`, supporting seamless transitions between Development, Production, and
-  Testing via `.env` files. [base.py](src/app/config/base.py) | [__init__.py](src/app/config/__init__.py)
-
-
-* **Unit testing:** Test suite using `pytest`. Configured an in-memory SQLite db and leveraged `pytest-mock`
-  for dependency injection and lifecycle testing. [conftest.py](tests/conftest.py)
-
-
-* **Modern Dependency Management:** Utilized `uv` for lightning-fast package management and
-  reproducible virtual environments. [pyproject.toml](pyproject.toml) | [uv.lock](uv.lock)
-
-### Upcoming Features & Scale-Up Plan:
-
-* **Deployment & Orchestration:** Dockerizing the application for containerized deployment and horizontal scaling.
-* **Frontend Integration:** Building a responsive user interface with **React** to allow users to manage their shortened
-  links.
-* **Advanced Testing:** Developing a custom "Live Migration" test suite to verify database schema migrations while the
-  application remains active and handles real-time read/write traffic.
-
-[↑ Back to Top](#table-of-contents)
-
-# Folder Structure
-
-helper command: ```uv run python -m directory_tree -I temp media __init__.py __pycache__ *.* routes low_level_design```
-
+### 1. Backend Setup
 ```shell
-mitly/
-├── requirements/     # base/local dependencies
-├── src/              # source code
-│   └── app/          # application code
-│       ├── api/      # Presentation Layer: api routers and endpoint definitions
-│       │   ├── v1/   # current public/stable api version
-│       │   └── v2/   # next/experimental api version
-│       ├── config/   # app settings split by environment type
-│       ├── crud/     # Business Logic & Data Access Layer
-│       ├── db/       # Database Layer: database setup, sessions, and ORM models
-│       ├── schemas/  # Presentation Layer: pydantic schemas defining the valid api input/output format
-│       └── main.py   # application entry point
-└── tests/            # automated tests
+cd backend
+uv venv --python 3.13
+.venv\Scripts\activate
+# Install dependencies and run
+uv run mitly
 ```
 
-[↑ Back to Top](#table-of-contents)
+### 2. Frontend Setup
+```shell
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend will be available at `http://localhost:5173` and the backend at `http://localhost:8003`.
+
+---
+
+# System Design
 
 # Development Workflow
 
@@ -88,7 +69,7 @@ database models > pydantic schemas > crud logic > fastapi endpoints > main.py en
 
 ## Delivery Framework
 
-![delivery_framework.png](media/delivery_framework.png)
+![delivery_framework.png](backend/media/delivery_framework.png)
 
 ## -------------------- 1. Requirements
 
@@ -169,7 +150,7 @@ fail
 
 ## -------------------- 5. High-level Design
 
-![basic_high_level_design.png](media/basic_high_level_design.png)
+![basic_high_level_design.png](backend/media/basic_high_level_design.png)
 
 ## -------------------- 6. Deep Dives
 
@@ -179,7 +160,7 @@ todo
 
 # Low Level Design Implementation
 
-[low_level_design/url_shortener.py](low_level_design/url_shortener.py)
+[backend/low_level_design/url_shortener.py](backend/low_level_design/url_shortener.py)
 
 [↑ Back to Top](#table-of-contents)
 
