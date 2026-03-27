@@ -12,7 +12,15 @@
 
 # Project Overview
 
-* **Tech**: FastAPI, React, PostgreSQL, SQLAlchemy, Pydantic, Pytest, Docker
+* **Tech**: <img src="media/fastapi_icon.svg" width="22" height="22" valign="middle"> FastAPI
+  <img src="media/react_icon.svg" width="26" height="26" valign="middle"> React
+  <img src="media/postgresql_icon.svg" width="23" height="23" valign="middle"> PostgreSQL
+  <img src="media/sqlalchemy_icon.svg" width="23" height="23" valign="middle"> SQLAlchemy
+  <img src="media/pytest_icon.svg" width="21" height="21" valign="middle"> Pytest
+  <img src="media/pydantic_icon.svg" width="21" height="21" valign="middle"> Pydantic
+  <img src="media/docker_icon.svg" width="21" height="21" valign="middle"> Docker
+
+
 * **Summary**: Mitly is a URL shortening service inspired by [Bitly](https://app.bitly.com/)
 
 ### Key Technical Implementation:
@@ -47,7 +55,7 @@
 
 ### Upcoming Features & Scale-Up Plan:
 
-* **Deployment & Orchestration:** Dockerizing the application for containerized deployment and horizontal scaling.
+* **Deployment:** Dockerizing the application for containerized deployment.
 * **Frontend Integration:** Building a responsive user interface with **React** to allow users to manage their shortened
   links.
 * **Advanced Testing:** Developing a custom "Live Migration" test suite to verify database schema migrations while the
@@ -193,11 +201,15 @@ Local setup for Windows OS
 git clone git@github.com:miray-mustafov/mitly.git
 ```
 
+<br>
+
 ### Navigate to the root level of the project:
 
 ```shell
 cd mitly
 ```
+
+<br>
 
 ### Configure and activate python virtual environment
 
@@ -206,11 +218,24 @@ uv venv --python 3.13
 .venv\Scripts\activate
 ```
 
-*Note: If uv not installed ```powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"```
+*Note: If uv not installed ```powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"```  
+<br>
+
+### Install dependencies
+
+```shell
+uv sync
+```
+
+<br>
 
 ### Create a local .env file next to .env.example:
 
+<br>
+
 ### Setup postgres database (suggested command in .env.example):
+
+<br>
 
 ### Run the app:
 
