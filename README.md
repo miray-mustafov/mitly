@@ -21,7 +21,8 @@
   <img src="media/docker_icon.svg" width="21" height="21" valign="middle"> Docker
 
 
-* **Summary**: Mitly is a URL shortening service inspired by [Bitly](https://app.bitly.com/)
+* **Summary**: Mitly is a URL shortening service inspired by [Bitly](https://app.bitly.com/).
+    Shorter links are easier to market, share, remember, and track.  
 
 ### Key Technical Implementation:
 
